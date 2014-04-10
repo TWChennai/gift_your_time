@@ -29,4 +29,21 @@ GiftYourTime::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+      :address => "sifymisc01.thoughtworks.com",
+      :domain => "giftyourtime.com"
+  }
+
+  #config.action_mailer.smtp_settings = {
+  #    address: 'smtp.gmail.com',
+  #    port: 465,
+  #    domain: 'giftyourtime.com',
+  #    username: 'indiagiftyourtime',
+  #    password: 'GiftIndia',
+  #    authentication:       'plain',
+  #    enable_starttls_auto: true
+  #}
+
 end
