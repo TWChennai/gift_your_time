@@ -1,0 +1,37 @@
+<head>
+<link rel='stylesheet' type='text/css' href='fullcalendar.css' />
+<script type='text/javascript' src='jquery.js'></script>
+<script type='text/javascript' src='fullcalendar.js'></script>
+
+  <script>
+      $(document).ready(function() {
+
+          // page is now ready, initialize the calendar...
+
+          $('#calendar').fullCalendar({
+              dayClick: function() {
+                  alert('a day has been clicked!');
+              }          });
+
+//              events: [
+//                  {
+//                      title: 'Wine making',
+//                      start: '2014-04-28',
+//                      description: 'Come, learn how to make wine :P'
+//                  }
+//                  // more events here
+//              ],
+//              eventRender: function(event, element) {
+//                  element.qtip({
+//                      content: event.description
+//                  });
+//              }
+      });
+
+  </script>
+</head>
+<p>
+  <%@event.first.id%>
+</p>
+<div id='calendar'></div>
+

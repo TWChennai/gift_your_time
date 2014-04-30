@@ -15,5 +15,7 @@
 //= require foundation
 //= require turbolinks
 //= require_tree .
+//= require bootstrap-datetimepicker
+//= require fullcalendar
 
 $(function(){ $(document).foundation(); });
