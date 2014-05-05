@@ -12,39 +12,41 @@
   </head>
 
   <body>
-  <div class="contain-to-grid">
-      <nav class="top-bar" data-topbar>
-        <ul class="title-area">
-          <li class="name">
-            <h1><a href="#">GiftYourTime</a></h1>
-          </li>
-        </ul>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1>
+            <%= image_tag('clock.png')%>
+            <%= link_to "GiftYourTime", root_path %>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
 
-        <section class="top-bar-section">
-          <% if user_signed_in? %>
-              <ul class="right">
-                <li class="has-form nav-item-text">
-                  <%= current_user.email %>
-                </li>
-                <li class="divider"></li>
-                <li class="has-form">
-                  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
-                </li>
-              </ul>
-          <% else %>
-              <ul class="right">
-                <li class="has-form">
-                  <%= link_to "Login", new_user_session_path, class: 'button' %>
-                </li>
-                <li class="divider"></li>
-                <li class="has-form">
-                  <%= link_to "Register", new_user_registration_path, class: 'button' %>
-                </li>
-              </ul>
-        <% end %>
-        </section>
-      </nav>
-  </div>
+      <section class="top-bar-section">
+        <% if user_signed_in? %>
+            <ul class="right">
+              <li class="has-form nav-item-text">
+                <%= current_user.email %>
+              </li>
+              <li class="divider"></li>
+              <li class="has-form">
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
+              </li>
+            </ul>
+        <% else %>
+            <ul class="right">
+              <li class="has-form">
+                <%= link_to "Login", new_user_session_path, class: 'button' %>
+              </li>
+              <li class="divider"></li>
+              <li class="has-form">
+                <%= link_to "Register", new_user_registration_path, class: 'button' %>
+              </li>
+            </ul>
+      <% end %>
+      </section>
+    </nav>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
