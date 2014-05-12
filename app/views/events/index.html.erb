@@ -1,5 +1,7 @@
 <div id='calendar'></div>
-
+<div id="event_details" class="hide">
+  <%= link_to "Add Event", new_event_path %>
+</div>
 <%= content_for :custom_js do %>
     <script>
         $(document).ready(function() {
@@ -9,15 +11,27 @@
             $('#calendar').fullCalendar({
                 dayClick: function() {
                     alert('a day has been clicked!');
+                    $("#event_details").show();
                 },
-                events: [
-                    {
-                        title: 'Wine making',
-                        start: '2014-04-28',
-                        description: 'Come, learn how to make wine :P'
-                    }
-                    // more events here
-                ]
+                events: function(start, end, callback){
+                    $.ajax({
+                        url: '/events.json',
+                        dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            var allEvents = [];
+                            $.each(data, function(index, eventObject){
+                                    console.log(eventObject)
+                               allEvents.push({
+                                  title: eventObject.name,
+                                  start: eventObject.date
+                               });
+                            });
+                            console.log(allEvents);
+                            callback(allEvents);
+                        }
+                    });
+                }
 //                ,
 //                eventRender: function(event, element) {
 //                    element.qtip({
