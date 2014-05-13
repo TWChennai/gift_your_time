@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   def index
     @events = Event.all #TODO: all_future_events
     respond_to do |format|
@@ -20,6 +21,37 @@ class EventsController < ApplicationController
   rescue
     render :new, status: 400
   end
+
+  def show
+    @event = Event.find(params[:id])
+  end
+
+  def destroy
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.js {} if @event.user_id == current_user.id && @event.destroy
+      format.html { redirect_to events_url } if @event.destroy
+    end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+      render :edit
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    if @event.user_id != current_user.id
+      redirect_to events_url
+    else
+      @event.name = params[:event][:name]
+   end
+      if @event.save
+        redirect_to events_url
+      else
+        render :edit
+      end
+    end
 
   private
   def event_parameters

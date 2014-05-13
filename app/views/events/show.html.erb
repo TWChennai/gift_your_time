@@ -1,0 +1,46 @@
+<table style="text-align: center;width: 30%">
+  <tr>
+    <th>
+      DATE
+    </th>
+    <th>TIME</th>
+  </tr>
+  <tr>
+    <td>
+      <%= @event.created_at.to_date %>
+    </td>
+    <td>
+      <%= @event.start_time.strftime("%I:%M %P") %> - <%= @event.end_time.strftime("%I:%M %P") %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>
+      EVENT NAME
+    </th>
+  <tr>
+    <td>
+      <%= @event.name %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>
+      DESCRIPTION
+    </th>
+  <tr>
+    <td>
+      <%= @event.description %>
+    </td>
+  </tr>
+</table>
+
+<% if current_user && @event.user_id == current_user.id %>
+
+    <%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %> &nbsp&nbsp
+    <%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %>
+<% end %>
+
+
+
+

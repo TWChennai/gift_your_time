@@ -5,4 +5,5 @@ GiftYourTime::Application.routes.draw do
 
   get 'gratitude' => 'gratitude#index'
   get 'receive_gift' => 'receive_gift#index'
+  resources :events
 end
