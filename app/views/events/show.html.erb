@@ -18,6 +18,7 @@
     <th>
       EVENT NAME
     </th>
+  </tr>
   <tr>
     <td>
       <%= @event.name %>
@@ -28,18 +29,52 @@
     <th>
       DESCRIPTION
     </th>
+  </tr>
   <tr>
-    <td>
+  <td>
       <%= @event.description %>
     </td>
   </tr>
-</table>
+
 
 <% if current_user && @event.user_id == current_user.id %>
-
-    <%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %> &nbsp&nbsp
-    <%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %>
+    <tr>
+      <td><%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %></td>
+      <td><%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %></td>
+    </tr>
+<% else %>
+      <tr>
+        <th>
+          ORGANIZER
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <%= @event.user.name %>
+        </td>
+      </tr>
 <% end %>
+
+</table>
+<h3>COMMENTS (<%= @all_comments.count %>)</h3>
+<%= form_for @comment do |f| %>
+    <div>
+      <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
+      <%= f.hidden_field :user_id %>
+      <%= f.hidden_field :event_id %>
+      <%= f.submit "Submit" %>
+    </div>
+<% end %>
+<ul class="comment_listing">
+  <% @all_comments.each do |comment| %>
+      <li>
+        <div><%= comment.user.name %>
+        <%= time_ago_in_words(comment.created_at) + " ago" %></div>
+        <div><p><%= comment.body %></p></div>
+        <%= link_to 'Delete',comment_path(comment.id),:method => :delete if current_user && comment.user_id == current_user.id %>
+      </li>
+  <% end %>
+</ul>
 
 
 

@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+
   def index
     @events = Event.all #TODO: all_future_events
     respond_to do |format|
       format.html
-      format.json {render json: @events.to_json}
+      format.json { render json: @events.to_json }
     end
   end
 
@@ -24,19 +25,21 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @all_comments = @event.comments
+    @comment = Comment.new(event_id: @event.id, user_id: current_user.id)
   end
 
   def destroy
     @event = Event.find(params[:id])
-    respond_to do |format|
-      format.js {} if @event.user_id == current_user.id && @event.destroy
-      format.html { redirect_to events_url } if @event.destroy
+    if @event.user_id == current_user.id
+      @event.destroy
+      redirect_to events_path
     end
   end
 
   def edit
     @event = Event.find(params[:id])
-      render :edit
+    render :edit
   end
 
   def update
@@ -45,13 +48,13 @@ class EventsController < ApplicationController
       redirect_to events_url
     else
       @event.name = params[:event][:name]
-   end
-      if @event.save
-        redirect_to events_url
-      else
-        render :edit
-      end
     end
+    if @event.save
+      redirect_to events_url
+    else
+      render :edit
+    end
+  end
 
   private
   def event_parameters

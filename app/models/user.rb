@@ -3,4 +3,11 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  #attr_accessible :first_name, :last_name
+  validates_presence_of :first_name, :last_name
+
+  def name
+    [first_name, last_name].join(" ")
+  end
 end
