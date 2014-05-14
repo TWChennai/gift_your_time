@@ -1,0 +1,22 @@
+<div>
+  <div>
+    <% if @results.present? %>
+        <h5>Showing events search results for "<span><%= params[:query] %></span>"</h5>
+    <% end %>
+    <% if @results.blank? %>
+        <h5>Nothing found for "<span><%= params[:query] %></span>"</h5>
+
+        <p>Why not conduct such an event yourself? :)</p>
+    <% end %>
+  </div>
+
+  <% if @results.present? %>
+      <ul>
+        <%- @results.each do |result| %>
+            <%- if  result[:event].present? %>
+                <%= render result[:event] %>
+            <%- end %>
+        <%- end %>
+      </ul>
+  <% end %>
+</div>
