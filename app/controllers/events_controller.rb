@@ -25,6 +25,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @event_participants = @event.event_participation
     @all_comments = @event.comments
     @comment = Comment.new(event_id: @event.id, user_id: current_user.id)
   end

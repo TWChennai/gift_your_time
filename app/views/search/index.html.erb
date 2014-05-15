@@ -1,22 +1,20 @@
 <div>
-  <div>
-    <% if @results.present? %>
-        <h5>Showing events search results for "<span><%= params[:query] %></span>"</h5>
-    <% end %>
-    <% if @results.blank? %>
-        <h5>Nothing found for "<span><%= params[:query] %></span>"</h5>
-
-        <p>Why not conduct such an event yourself? :)</p>
-    <% end %>
-  </div>
-
   <% if @results.present? %>
+      <%= pluralize( @results.count, 'event' ) %> found
       <ul>
-        <%- @results.each do |result| %>
-            <%- if  result[:event].present? %>
-                <%= render result[:event] %>
-            <%- end %>
-        <%- end %>
+        <% @results.each do |event| %>
+            <div>
+              <ul>
+                <li>
+                  <%= event.start_time.strftime("%I:%M %P") %> to <%= event.end_time.strftime("%I:%M %P") %>
+                  <span> <%= link_to event.name,event_url(event) %> </span>
+                  <span> by <%= event.user.name %> </span>
+                  <span> |  COMMENTS <%= event.comments.count%> </span>
+                  <span> |  PARTICIPANTS <%= event.event_participation.count%> </span>
+                </li>
+              </ul>
+            </div>
+        <% end %>
       </ul>
   <% end %>
 </div>

@@ -14,19 +14,6 @@
 <body>
 <nav class="top-bar" data-topbar>
   <ul class="title-area">
-        <span style="color: #ffffff">
-          Search
-          <%= form_tag :search, :method => :get do %>
-
-                <%= text_field_tag :query,
-                                   params[:query],
-                                   :placeholder => "Find Events",
-                                   :id => "search-text"
-                %>
-
-              <input type="submit" id="search-submit" value="Search"/>
-          <% end %>
-        </span>
     <li class="name">
       <h1>
         <%= link_to image_tag('clock.png'), root_path %>
@@ -35,28 +22,38 @@
     <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
   </ul>
 
+
   <section class="top-bar-section">
-    <% if user_signed_in? %>
-        <ul class="right">
-          <li class="has-form nav-item-text">
-            <%= current_user.email %>
-          </li>
-          <li class="divider"></li>
-          <li class="has-form">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
-          </li>
-        </ul>
-    <% else %>
-        <ul class="right">
-          <li class="has-form">
-            <%= link_to "Login", new_user_session_path, class: 'button' %>
-          </li>
-          <li class="divider"></li>
-          <li class="has-form">
-            <%= link_to "Register", new_user_registration_path, class: 'button' %>
-          </li>
-        </ul>
+    <ul class="right">
+      <li class="has-form">
+        <div class="row collapse">
+          <%= form_tag :search, :method => :get do %>
+              <div class="large-8 small-9 columns">
+                <%= text_field_tag :query, params[:query], :placeholder => "search an event", :id => "search-text"%>
+              </div>
+              <div class="large-4 small-3 columns">
+              </div>
+          <% end %>
+        </div>
+      </li>
+      <% if user_signed_in? %>
+            <li class="has-form nav-item-text">
+              <%= current_user.email %>
+            </li>
+            <li class="divider"></li>
+            <li class="has-form">
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
+            </li>
+      <% else %>
+            <li class="has-form">
+              <%= link_to "Login", new_user_session_path, class: 'button' %>
+            </li>
+            <li class="divider"></li>
+            <li class="has-form">
+              <%= link_to "Register", new_user_registration_path, class: 'button' %>
+            </li>
     <% end %>
+    </ul>
   </section>
 </nav>
 

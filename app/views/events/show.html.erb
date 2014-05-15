@@ -31,18 +31,18 @@
     </th>
   </tr>
   <tr>
-  <td>
+    <td>
       <%= @event.description %>
     </td>
   </tr>
 
 
-<% if current_user && @event.user_id == current_user.id %>
-    <tr>
-      <td><%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %></td>
-      <td><%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %></td>
-    </tr>
-<% else %>
+  <% if current_user && @event.user_id == current_user.id %>
+      <tr>
+        <td><%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %></td>
+        <td><%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %></td>
+      </tr>
+  <% else %>
       <tr>
         <th>
           ORGANIZER
@@ -53,29 +53,50 @@
           <%= @event.user.name %>
         </td>
       </tr>
-<% end %>
+      <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
+          <th>
+            <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}) %>
+          </th>
+      <% else %>
+          <th>
+            <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete %>
+          </th>
+      <% end %>
+  <% end %>
 
 </table>
-<h3>COMMENTS (<%= @all_comments.count %>)</h3>
-<%= form_for @comment do |f| %>
-    <div>
-      <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
-      <%= f.hidden_field :user_id %>
-      <%= f.hidden_field :event_id %>
-      <%= f.submit "Submit" %>
-    </div>
-<% end %>
-<ul class="comment_listing">
-  <% @all_comments.each do |comment| %>
-      <li>
-        <div><%= comment.user.name %>
-        <%= time_ago_in_words(comment.created_at) + " ago" %></div>
-        <div><p><%= comment.body %></p></div>
-        <%= link_to 'Delete',comment_path(comment.id),:method => :delete if current_user && comment.user_id == current_user.id %>
-      </li>
-  <% end %>
-</ul>
 
+<div>
+    <h3>PARTICIPANTS (<%= @event_participants.count %>)</h3>
+    <ul class="">
+      <% @event_participants.each do |event_participant| %>
+          <li>
+            <div><%= event_participant.user.name %></div>
+          </li>
+      <% end %>
+    </ul>
+</div>
+<div>
+    <h3>COMMENTS (<%= @all_comments.count %>)</h3>
+    <%= form_for @comment do |f| %>
+        <div>
+          <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :event_id %>
+          <%= f.submit "Submit" %>
+        </div>
+    <% end %>
+    <ul class="comment_listing">
+      <% @all_comments.each do |comment| %>
+          <li>
+            <div><%= comment.user.name %>
+              <%= time_ago_in_words(comment.created_at) + " ago" %></div>
+            <div><p><%= comment.body %></p></div>
+            <%= link_to 'Delete', comment_path(comment.id), :method => :delete if current_user && comment.user_id == current_user.id %>
+          </li>
+      <% end %>
+    </ul>
+</div>
 
 
 
