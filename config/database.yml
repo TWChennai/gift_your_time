@@ -1,10 +1,12 @@
-development:
+development: &development
   adapter: postgresql
   database: gift_your_time
   user: gift_your_time
   host: localhost
   pool: 5
   timeout: 5000
+
+production: *development
 
 test: &test
   adapter: postgresql

@@ -24,10 +24,10 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.where(id: params[:id]).limit(1)[0]
     @event_participants = @event.event_participation
     @all_comments = @event.comments
-    @comment = Comment.new(event_id: @event.id, user_id: current_user.id)
+    @comment = Comment.new(event_id: @event.id, user_id: current_user.id) if user_signed_in?
   end
 
   def destroy

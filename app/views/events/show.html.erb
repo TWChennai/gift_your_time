@@ -53,14 +53,16 @@
           <%= @event.user.name %>
         </td>
       </tr>
-      <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
-          <th>
-            <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}) %>
-          </th>
-      <% else %>
-          <th>
-            <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete %>
-          </th>
+      <% if current_user %>
+          <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
+              <th>
+                <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}) %>
+              </th>
+          <% else %>
+              <th>
+                <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete %>
+              </th>
+          <% end %>
       <% end %>
   <% end %>
 
@@ -78,13 +80,15 @@
 </div>
 <div>
     <h3>COMMENTS (<%= @all_comments.count %>)</h3>
-    <%= form_for @comment do |f| %>
-        <div>
-          <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
-          <%= f.hidden_field :user_id %>
-          <%= f.hidden_field :event_id %>
-          <%= f.submit "Submit" %>
-        </div>
+    <% if user_signed_in? %>
+        <%= form_for @comment do |f| %>
+            <div>
+              <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
+              <%= f.hidden_field :user_id %>
+              <%= f.hidden_field :event_id %>
+              <%= f.submit "Submit" %>
+            </div>
+        <% end %>
     <% end %>
     <ul class="comment_listing">
       <% @all_comments.each do |comment| %>
