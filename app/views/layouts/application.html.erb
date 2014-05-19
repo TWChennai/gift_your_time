@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400' rel='stylesheet' type='text/css'>
   <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
 
   <%= stylesheet_link_tag "application" %>
@@ -57,9 +57,9 @@
   </section>
 </nav>
 
-<p class="notice"><%= notice %></p>
+<div class="notice"><%= notice %></div>
 
-<p class="alert"><%= alert %></p>
+<div class="alert"><%= alert %></div>
 
 <%= yield %>
 <%= javascript_include_tag "application" %>

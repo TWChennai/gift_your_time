@@ -1,48 +1,72 @@
+<%= stylesheet_link_tag "calendar" %>
+
 <div id='calendar'></div>
 <div id="event_details" class="hide">
   <%= link_to "Add Event", new_event_path%>
 </div>
+
+<script type="text/template" id="calendar-template">
+    <div class="clndr-controls">
+      <span class="clndr-previous-button nav-arrow">&lsaquo;</span>
+      <h2 class="title">[%= month %] [%= year %]</h2>
+      <span class="clndr-next-button nav-arrow">&rsaquo;</span>
+    </div>
+    <div class="clndr-grid">
+      <div class="days-of-the-week">
+        [% _.each(daysOfTheWeek, function(day) { %]
+          <div class="header-day grid-cell">[%= day %]</div>
+        [% }); %]
+        <div class="days">
+          [% _.each(days, function(day) { %]
+            <div class="grid-cell [%= day.classes %]">
+                <span class="day-text">[%= day.day %]</span>
+                <ul class="inline-event-list">
+                    [% _.each(day.events, function (evt) {%]
+                        [% if (evt.imAttending) { %]
+                            <li class="inline-event im-attending" data-event-id="[%=evt.id%]">
+                        [%} else {%]
+                            <li class="inline-event" data-event-id="[%=evt.id%]">
+                        [%}%] <span class="inline-event-description"> [%= evt.time %] [%= evt.title%]</span></li>
+                    [%});%]
+                </ul>
+            </div>
+          [% }); %]
+        </div>
+      </div>
+    </div>
+</script>
+
 <%= content_for :custom_js do %>
-    <script>
-        $(document).ready(function() {
-
-            // page is now ready, initialize the calendar...
-
-            $('#calendar').fullCalendar({
-                dayClick: function() {
-                    alert('a day has been clicked!');
-                    $("#event_details").show();
-                },
-                eventClick:function(calEvent,jsEvent,view){
-                    window.location.assign("events/"+calEvent.id)
-                },
-                events: function(start, end, callback){
+    <script type="text/javascript">
+                
+        $(function() {
+            window.Calendar.init("#calendar");
+            window.Calendar.onReady(function() {
+                (function loadEvents() {
                     $.ajax({
                         url: '/events.json',
                         dataType: 'json',
-                        success: function(data){
+                        success: function(data) {
                             var allEvents = [];
-                            $.each(data, function(index, eventObject){
-                               allEvents.push({
-                                  id:eventObject.id,
-                                  title: eventObject.name,
-                                  start: eventObject.date
-                               });
+                            $.each(data, function(index, eventObject) {
+                                allEvents.push({
+                                    id: eventObject.id,
+                                    title: eventObject.name,
+                                    date: eventObject.date,
+                                    imAttending: true
+                                });
                             });
-                            callback(allEvents);
+                            window.Calendar.setEvents(allEvents);
                         }
                     });
-                }
-//                ,
-//                eventRender: function(event, element) {
-//                    element.qtip({
-//                        content: event.description
-//                    });
-//                }
+                })();
             });
+            window.Calendar.onEventClicked(function(eventId) {
+                window.location.assign("events/" + eventId);
+            });
+            window.Calendar.onDayClicked(function (date, events) {
+                alert('a day has been clicked!');
+            })
         });
-
     </script>
 <% end %>
-
-

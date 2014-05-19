@@ -11,12 +11,21 @@
 // about supported directives.
 //
 //= require jquery
+//= require lodash
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
 //= require_tree .
 //= require moment
 //= require bootstrap-datetimepicker
-//= require fullcalendar
 
-$(function(){ $(document).foundation(); });
+// replace lo-dash template delimiters from <%%> to [%%]
+// to not conflict with erb 
+_.templateSettings = {
+    interpolate: /\[\%\=(.+?)\%\]/g,
+    evaluate: /\[\%(.+?)\%\]/g
+};
+
+$(function() {
+    $(document).foundation();
+});
