@@ -24,13 +24,6 @@ ActiveRecord::Schema.define(version: 20140514113421) do
     t.datetime "updated_at"
   end
 
-  create_table "event_participation", force: true do |t|
-    t.integer  "event_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "event_participations", force: true do |t|
     t.integer  "event_id"
     t.integer  "user_id"
