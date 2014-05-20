@@ -1,74 +1,55 @@
-<table style="text-align: center;width: 30%">
-  <tr>
-    <th>
-      DATE
-    </th>
-    <th>TIME</th>
-  </tr>
-  <tr>
-    <td>
-      <%= @event.created_at.to_date %>
-    </td>
-    <td>
-      <%= @event.start_time.strftime("%I:%M %P") %> - <%= @event.end_time.strftime("%I:%M %P") %>
-    </td>
-  </tr>
-
-  <tr>
-    <th>
-      EVENT NAME
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <%= @event.name %>
-    </td>
-  </tr>
-
-  <tr>
-    <th>
-      DESCRIPTION
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <%= @event.description %>
-    </td>
-  </tr>
-
-
-  <% if current_user && @event.user_id == current_user.id %>
-      <tr>
-        <td><%= link_to 'Edit Event', edit_event_path, :style => 'color:green' %></td>
-        <td><%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', :style => 'color:red' %></td>
-      </tr>
-  <% else %>
-      <tr>
-        <th>
-          ORGANIZER
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <%= @event.user.name %>
-        </td>
-      </tr>
-      <% if current_user %>
-          <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
-              <th>
-                <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}) %>
-              </th>
-          <% else %>
-              <th>
-                <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete %>
-              </th>
-          <% end %>
-      <% end %>
-  <% end %>
-
-</table>
-
-<div>
+<div class="row event">
+  <div class="columns small-12 large-4">
+    <div class="clearfix">
+        <div class="left">
+          <span>DATE</span>
+          <div><span><%= @event.created_at.strftime("%d-%b-%Y") %></span></div>
+        </div>
+        <div class="show-for-medium-up time_range">
+          <span>TIME</span>
+          <div><span><%= @event.start_time.strftime("%I:%M %p") %> - <%= @event.end_time.strftime("%I:%M %p") %></div>
+        </div>
+    </div>
+    <div class="show-for-small-only">
+      <div class="left">
+          <span>FROM</span>
+          <div><span><%= @event.start_time.strftime("%I:%M %p") %></span></div>
+      </div>
+      <div class="time_range">
+        <span>TO</span>
+        <div><span><%= @event.end_time.strftime("%I:%M %p") %></span></div>
+      </div>
+    </div>
+    <div>
+      <span>DESCRIPTION</span>
+      <div><span><%= @event.description %></span></div>
+    </div>
+    <div>
+      <span>EVENT NAME</span>
+      <div><span><%= @event.name %></span></div>
+    </div>
+    <div>
+      <% if current_user && @event.user_id == current_user.id %>
+          <%= link_to 'Edit Event', edit_event_path, class: "button radius" %>
+          <%= link_to 'Cancel Event', @event, :method => :delete, :confirm => 'Are you sure?', class: "button round" %>
+      <% else %>
+        <span>ORGANIZER</span>
+        <div><span><%= @event.user.name %></span></div>
+        <% if current_user %>
+            <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
+                <th>
+                  <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), class: "button radius" %>
+                </th>
+            <% else %>
+                <th>
+                  <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete, class: "button radius" %>
+                </th>
+            <% end %>
+        <% end %>
+    <% end %>
+    </div>
+  </div>
+  <div class="columns small-12 large-4">
     <h3>PARTICIPANTS (<%= @event_participants.count %>)</h3>
     <ul class="">
       <% @event_participants.each do |event_participant| %>
@@ -77,29 +58,30 @@
           </li>
       <% end %>
     </ul>
-</div>
-<div>
-    <h3>COMMENTS (<%= @all_comments.count %>)</h3>
-    <% if user_signed_in? %>
-        <%= form_for @comment do |f| %>
-            <div>
-              <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
-              <%= f.hidden_field :user_id %>
-              <%= f.hidden_field :event_id %>
-              <%= f.submit "Submit" %>
-            </div>
-        <% end %>
-    <% end %>
-    <ul class="comment_listing">
-      <% @all_comments.each do |comment| %>
-          <li>
-            <div><%= comment.user.name %>
-              <%= time_ago_in_words(comment.created_at) + " ago" %></div>
-            <div><p><%= comment.body %></p></div>
-            <%= link_to 'Delete', comment_path(comment.id), :method => :delete if current_user && comment.user_id == current_user.id %>
-          </li>
+  </div>
+  <div class="columns">
+      <h3>COMMENTS (<%= @all_comments.count %>)</h3>
+      <% if user_signed_in? %>
+          <%= form_for @comment do |f| %>
+              <div>
+                <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
+                <%= f.hidden_field :user_id %>
+                <%= f.hidden_field :event_id %>
+                <%= f.submit "Submit" %>
+              </div>
+          <% end %>
       <% end %>
-    </ul>
+      <ul class="comment_listing">
+        <% @all_comments.each do |comment| %>
+            <li>
+              <div><%= comment.user.name %>
+                <%= time_ago_in_words(comment.created_at) + " ago" %></div>
+              <div><p><%= comment.body %></p></div>
+              <%= link_to 'Delete', comment_path(comment.id), :method => :delete if current_user && comment.user_id == current_user.id %>
+            </li>
+        <% end %>
+      </ul>
+  </div>
 </div>
 
 

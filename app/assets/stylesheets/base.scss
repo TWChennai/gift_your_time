@@ -23,6 +23,16 @@ $white: #ffffff;
 
 }
 
+.event{
+  padding: 0px;
+  margin: 0px;
+
+  .time_range{
+    padding-left: 50px;
+    margin-left: 50px;
+  }
+}
+
 h2 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
