@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400' rel='stylesheet' type='text/css'>
-  <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css'>
+  <title><%= content_for?(:title) ? yield(:title) : "Gift your time!" %></title>
 
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "vendor/modernizr" %>
@@ -12,57 +12,14 @@
 </head>
 
 <body>
-<nav class="top-bar" data-topbar>
-  <ul class="title-area">
-    <li class="name">
-      <h1>
-        <%= link_to asset_path('clock.png'), root_path %>
-      </h1>
-    </li>
-    <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-  </ul>
+  <%= render "shared/top_bar" %>
 
+  <div class="notice"><%= notice %></div>
 
-  <section class="top-bar-section">
-    <ul class="right">
-      <li class="has-form">
-        <div class="row collapse">
-          <%= form_tag :search, :method => :get do %>
-              <div class="large-8 small-9 columns">
-                <%= text_field_tag :query, params[:query], :placeholder => "search an event", :id => "search-text"%>
-              </div>
-              <div class="large-4 small-3 columns">
-              </div>
-          <% end %>
-        </div>
-      </li>
-      <% if user_signed_in? %>
-            <li class="has-form nav-item-text">
-              <%= current_user.email %>
-            </li>
-            <li class="divider"></li>
-            <li class="has-form">
-              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
-            </li>
-      <% else %>
-            <li class="has-form">
-              <%= link_to "Login", new_user_session_path, class: 'button' %>
-            </li>
-            <li class="divider"></li>
-            <li class="has-form">
-              <%= link_to "Register", new_user_registration_path, class: 'button' %>
-            </li>
-    <% end %>
-    </ul>
-  </section>
-</nav>
+  <div class="alert"><%= alert %></div>
 
-<div class="notice"><%= notice %></div>
-
-<div class="alert"><%= alert %></div>
-
-<%= yield %>
-<%= javascript_include_tag "application" %>
-<%= yield :custom_js %>
+  <%= yield %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :custom_js %>
 </body>
 </html>

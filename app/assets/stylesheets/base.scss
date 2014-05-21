@@ -1,26 +1,26 @@
 
+@import "foundation_and_overrides";
+
 $white: #ffffff;
 
 .nav-item-text {
-  color: $white;
-//  height: $topbar-input-height;
+	color: $white;
 }
 
 .heading{
-  text-align: center;
+	text-align: center;
 }
 
 .hide{
-  display: none;
+	display: none;
 }
 
 .errors{
-  color: red;
+	color: red;
 }
 
 .comment_listing{
   list-style-type: none;
-
 }
 
 .event{
@@ -33,16 +33,16 @@ $white: #ffffff;
   }
 }
 
-h2 {
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 600;
-	line-height: 46px;
-	font-size: 30px;
+.logo {
+	height: $topbar-height - 10px;
+	margin: 5px;
 }
-* {
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 23px;
-	margin: 0 0 23px 0;
+
+.title-area {
+	position: relative;
+	h1 {
+		display: inline-block;
+  		vertical-align: middle;
+  		margin: auto;
+	}
 }
