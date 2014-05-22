@@ -1,8 +1,10 @@
 <nav class="top-bar" data-topbar>
   <ul class="title-area">
     <h1>
-      <%= image_tag "clock.png", :class => "logo" %>
-      Gift your Time
+     <a href= '/' class="nav-item-text">
+       <%= image_tag "clock.png", :class => "logo" %>
+         Gift your Time
+     </a>
     </h1>
     <li class="toggle-topbar menu-icon"><a href="#"></a></li>
   </ul>
@@ -15,11 +17,18 @@
           <% end %>
         </div>
       </li>
+
       <li class="divider"></li>
       <% if user_signed_in? %>
       <li class="has-form nav-item-text">
         <%= current_user.email %>
       </li>
+
+      <li class="divider"></li>
+      <li class="nav-item-text">
+        <%= link_to "Events History", history_url, class:'nav-item-text' %>
+      </li>
+
       <li class="divider"></li>
       <li class="has-form">
         <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button' %>
@@ -28,6 +37,7 @@
       <li class="has-form">
         <%= link_to "Login", new_user_session_path, class: 'button' %>
       </li>
+
       <li class="divider"></li>
       <li class="has-form">
         <%= link_to "Register", new_user_registration_path, class: 'button' %>

@@ -4,4 +4,5 @@ GiftYourTime::Application.routes.draw do
   resources :events, :event_participation
   resources :comments, only: [:create, :destroy]
   get 'search' => 'search#index'
+  get 'history'=> 'history#index'
 end

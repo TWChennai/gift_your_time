@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   #attr_accessible :first_name, :last_name
   validates_presence_of :first_name, :last_name
   has_many :event_participation
+  has_many :events
   def name
     [first_name, last_name].join(" ")
   end

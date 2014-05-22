@@ -1,0 +1,23 @@
+<% if @organized_events.present? %>
+<h3>Events you organized</h3>
+<ul>
+  <% @organized_events.each do |event| %>
+    <li>
+    <%= link_to event.name, event_url(event.id) %>
+    <%= time_ago_in_words(event.date)%> ago
+    </li>
+<%end%>
+</ul>
+<%end%>
+<% if @participated_events.present? %>
+<h3> Events you attended </h3>
+<ul>
+  <% @participated_events.each do |event| %>
+      <li>
+        <%= link_to event.name, event_url(event.id) %>
+        <%= event.user.name%>
+        <%= time_ago_in_words(event.date)%> ago
+      </li>
+  <%end%>
+</ul>
+<%end%>
