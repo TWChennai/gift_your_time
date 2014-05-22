@@ -89,7 +89,7 @@ $calendar_cell_border_color: rgb(224, 209, 209);
     }
 }
 
-#events-in-day-list {
+.events-in-day-list {
     list-style-type: none;
     margin: 0;
     .event-timing {
@@ -100,14 +100,9 @@ $calendar_cell_border_color: rgb(224, 209, 209);
     .event-details {
         display: inline-block;
     }
-    .im-attending .small-text {
+    event-timing.small-text {
         color: green;
         padding-left: 4px;
-    }
-    li {
-        padding-left: 27px;
-        padding-top: 20px;
-        position: relative;
         &:before {
             content: ' ';
             width: 20px;
@@ -118,7 +113,16 @@ $calendar_cell_border_color: rgb(224, 209, 209);
             top: 0px;
         }
     }
+    li {
+        padding-left: 27px;
+        padding-top: 20px;
+        position: relative;
+    }
     li:nth-child(odd) {
         background-color: rgb(233, 230, 230);
     }
+}
+
+meta.detect-mobile {
+    font-family: "/only screen and (max-width: 46em)/";
 }

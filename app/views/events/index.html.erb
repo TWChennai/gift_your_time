@@ -1,10 +1,9 @@
 <%= stylesheet_link_tag "calendar" %>
 
 <div id='calendar'></div>
-<div id="event_details" class="hide">
-  <%= link_to "Add Event", new_event_path%>
+<div id="event-details">
 </div>
-
+<div id="light-box-container" data-reveal class="reveal-modal"></div>
 <script type="text/template" id="calendar-template">
     <div class="clndr-controls">
       <span class="clndr-previous-button nav-arrow">&lsaquo;</span>
@@ -26,7 +25,7 @@
                             <li class="inline-event im-attending" data-event-id="[%=evt.id%]">
                         [%} else {%]
                             <li class="inline-event" data-event-id="[%=evt.id%]">
-                        [%}%] <span class="inline-event-description"> [%= evt.time %] [%= evt.title%]</span></li>
+                        [%}%] <span class="inline-event-description"> [%= evt.formattedStartTime %] [%= evt.title%]</span></li>
                     [%});%]
                 </ul>
             </div>
@@ -36,6 +35,37 @@
     </div>
 </script>
 
+<script type="text/template" id="event-details-template">
+  <div class="add-event">
+    <span id="day-number">[%=dayNumber%]</span> [%=monthName%] [%=year%] <a class="add-event-button button" href="<%=new_event_path%>">Add an event</a>
+  </div>
+  <ul class="events-in-day-list">
+    [% _.each(events, function (event) { %]
+      <li>
+        <div class="event-timing">
+          <div>[%= event.formattedStartTime %]</div>
+          [% if (event.imAttending) {%]
+            <div class="small-text">I&#39;m attending</div>
+          [% } %]
+        </div>
+        <div class="event-details">
+          <div class="event-title">[%= event.title %]</div>
+          <div class="small-text">[%= event.description %]</div>
+          <div class="event-eta">[%= event.eta %]</div>
+        </div>
+      </li>
+    [% });%]
+  </ul>
+  [% if(!isMobile) {%]
+    <a class="close-reveal-modal">&#215;</a>
+  [% } %]
+</script>
+
 <%= content_for :custom_js do %>
     <%= javascript_include_tag "index" %>
+    <script type="text/javascript">
+      $(function () {
+        new CalendarController("#calendar", window.Calendar).init();
+      });
+    </script>
 <% end %>
