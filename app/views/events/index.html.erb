@@ -15,7 +15,7 @@
         [% _.each(daysOfTheWeek, function(day) { %]
           <div class="header-day grid-cell">[%= day %]</div>
         [% }); %]
-        <div class="days">
+        <div class="days clearfix">
           [% _.each(days, function(day) { %]
             <div class="grid-cell [%= day.classes %]">
                 <span class="day-text">[%= day.day %]</span>

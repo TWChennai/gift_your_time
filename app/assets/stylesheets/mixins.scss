@@ -1,7 +1,7 @@
 @mixin clear-fix {
 	display: inline-block;
 	&:after {
-		content: ".";
+		content: " ";
 		display: block;
 		clear: both;
 		visibility: hidden;

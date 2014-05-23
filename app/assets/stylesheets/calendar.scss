@@ -3,31 +3,6 @@ $calendar_cell_border_color: rgb(224, 209, 209);
 
 @import "mixins";
 
-@media screen and (max-width: 1024px) {
-    .inline-event-list {
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin-left: 20px;
-    }
-    .inline-event {
-        position: absolute;
-        height: 15px;
-        margin: 0px;
-        &:before {
-            height: 5px;
-            width: 5px;
-        }
-    }
-    .inline-event-description {
-        display: none;
-    }
-    .day {
-        height: 14.28571428571429%;
-        max-height: 55px;
-    }
-}
-
 #calendar {
     width: 100%;
 
@@ -139,21 +114,20 @@ $calendar_cell_border_color: rgb(224, 209, 209);
 
 .add-event {
     position: relative;
-    font-size: 1.7rem;
     font-weight: 300;
 
     .date {
         float: left;
         margin-left: 5px;
-        padding-top: 1px;
+        padding-top: 0px;
 
         #day-number {
             background-image: url(icon-calendar-48.png);
             width: 48px;
             height: 48px;
             display: inline-block;
-            padding-top: 15px;
-            padding-left: 9px;
+            padding-top: 18px;
+            padding-left: 14px;
         }
     }
 
@@ -176,3 +150,79 @@ $calendar_cell_border_color: rgb(224, 209, 209);
 meta.detect-mobile {
     font-family: "/only screen and (max-width: 46em)/";
 }
+
+//mobile
+@media screen and (max-width: 46rem) {
+    #calendar{
+        .inline-event-list {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-left: 20px;
+        }
+        .inline-event {
+            position: absolute;
+            height: 15px;
+            margin: 0px;
+            &:before {
+                content: " ";
+                position: absolute;
+                background-color: #00F;
+                left: -19px;
+                top: 9px;
+                width: 8px;
+                height: 8px;
+            }
+        }
+        .inline-event-description {
+            display: none;
+        }
+        .day {
+            height: 14.28571428571429%;
+            max-height: 55px;
+
+            .day-text {
+                display: inline-block;
+                margin: auto;
+                bottom: 0px;
+                font-size: 1.1rem;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                left: 0px;
+                font-weight: 300;
+            }
+        }
+    }
+}
+//medium
+@media screen and (min-width: 46rem) and (max-width: 64rem) {
+    .add-event {
+        font-size: 1.4rem;
+        .date {
+            padding-top: 0px;
+            #day-number {
+                padding-top: 16px;
+                padding-left: 12px;
+            }
+        }
+    }
+}
+
+//large
+@media screen and (min-width: 64rem) {
+    .add-event {
+        font-size: 1.7rem;
+        .date {
+            padding-top: 3px;
+            #day-number {
+                padding-top: 14px;
+                padding-left: 11px;
+            }
+        }
+    }
+}
+
+
