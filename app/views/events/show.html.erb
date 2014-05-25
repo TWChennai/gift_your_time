@@ -32,28 +32,30 @@
             <div class="label">Organizer</div>
             <div class="value"><%= @event.user.name %></div>
           </div>
-          <% if current_user %>
-              <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
-                    <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), class: "button success-button" %>
-              <% else %>
-                    <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete, class: "button success-button failure-button" %>
-              <% end %>
-          <% end %>
+          <div class="columns">
+            <% if current_user %>
+                <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " +@event.id.to_s).count == 0 %>
+                      <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), class: "button success-button" %>
+                <% else %>
+                      <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => @event.id}), :method => :delete, class: "button success-button failure-button" %>
+                <% end %>
+            <% end %>
+          </div>
         <% end %>
     </div>
   </div>
   <div id="participants-container" class="columns small-12 large-4">
-    <h4 class="header" id="participants-header">Participants (<%= @event_participants.count %>)</h4>
-    <ul class="">
+    <h4 class="header" id="participants-header"><%=image_tag "participants-icon.png", class: "header-icon" %> Participants (<%= @event_participants.count %>)</h4>
+    <ul class="user-name-list">
       <% @event_participants.each do |event_participant| %>
-          <li>
-            <div><%= event_participant.user.name %></div>
+          <li class="user-name-list-item">
+            <div class="user-name"><%= event_participant.user.name %></div>
           </li>
       <% end %>
     </ul>
   </div>
   <div id="comments-container" class="columns small-12 large-8">
-      <h4 class="header" id="comments-header"><%=image_tag "comments-icon.png", class: "comments-icon" %> Comments (<%= @all_comments.count %>)</h4>
+      <h4 class="header" id="comments-header"><%=image_tag "comments-icon.png", class: "header-icon" %> Comments (<%= @all_comments.count %>)</h4>
       <% if user_signed_in? %>
           <%= form_for @comment do |f| %>
               <div>

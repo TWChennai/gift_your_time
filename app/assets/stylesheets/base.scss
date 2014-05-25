@@ -78,7 +78,6 @@ div.form {
 	display: inline-block;
 	min-height: 37px;
 	vertical-align: middle;
-	max-width: 200px;
 	max-height: 50px;
 	overflow: hidden;
 }
@@ -94,6 +93,7 @@ div.form {
 	background-color: rgb(162, 196, 201);
 	margin-top: 0;
 	margin-bottom: 0;
+	padding-left: 1%;
 }
 
 div.columns {
@@ -116,12 +116,49 @@ $event-page-left-gap: 2%;
 }
 
 .label-value-container {
-	margin-bottom: 15px;
+	margin-bottom: 30px;
 	font-size: 1.15rem;
+}
+
+.header-icon {
+	width: 24px;
+	margin: 0px 5px;
+}
+.user-name {
+	font-size: 1.1rem;
 }
 
 #participants-container {
 	float: right;
+	h4 {
+		img.header-icon {
+			margin-bottom: 5px;
+		}
+	}
+	.user-name-list {
+		list-style-type: none;
+		margin: 0;
+		.user-name-list-item{
+
+			&:before {
+				content: '>';
+				display: inline-block;
+				font-size: 1rem;
+				color: rgb(202, 183, 183);
+				font-weight: 300;
+				padding: 2%;
+				position: relative;
+			}
+			
+			&:nth-child(even) {
+				background-color: rgb(211, 227, 229);
+			}
+
+			&:nth-child(odd) {
+				background-color: rgb(255, 255, 255);
+			}
+		}
+	}
 }
 
 #event-name-header {
@@ -130,10 +167,6 @@ $event-page-left-gap: 2%;
 
 #comments-container {
 	float: left;
-	.comments-icon {
-		width: 24px;
-		margin: 0px 5px;
-	}
 	textarea {
 		margin: $event-page-left-gap;
 		width: 100% - $event-page-left-gap*2;
@@ -146,9 +179,6 @@ $event-page-left-gap: 2%;
 	}
 	.comment_listing li {
 		border-bottom: 1px solid rgb(243, 212, 212);
-	}
-	.user-name {
-		font-size: 1.1rem;
 	}
 	.comment-posted-time {
 		font-size: 0.7rem;
