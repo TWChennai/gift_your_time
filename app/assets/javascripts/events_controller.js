@@ -1,7 +1,7 @@
-window.CreateEventsController = function(selector) {
-    var createEventsContainer = $(selector);
-    var startTimeElement = createEventsContainer.find("#start_time");
-    var endTimeElement = createEventsContainer.find("#end_time");
+window.EventController = function(selector) {
+    var eventContainer = $(selector);
+    var startTimeElement = eventContainer.find("#start_time");
+    var endTimeElement = eventContainer.find("#end_time");
 
     var onStartTimeChanged = function() {
         var startTime = $(this).val();
@@ -11,7 +11,6 @@ window.CreateEventsController = function(selector) {
             'maxTime': '12:00am',
             'showDuration': true,
             'timeFormat': 'h:i A'
-
         });
     };
 

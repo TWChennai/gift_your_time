@@ -52,10 +52,10 @@
 </div>
 
 <%= content_for :custom_js do %>
-    <%= javascript_include_tag "create_events" %>
+    <%= javascript_include_tag "events_controller" %>
     <script type="text/javascript">
       $(function () {
-        new CreateEventsController("#create-events-container").init();
+        new EventController("#create-events-container").init();
       });
     </script>
 <% end %>

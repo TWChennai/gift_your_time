@@ -1,9 +1,9 @@
 <h1 class="heading">
   Edit event
 </h1>
-<div>
+<div class="form" id="edit-events-container">
   <%= form_for @event do |f|%>
-      <div>
+      <div class="large-3 columns small-12">
         <%= f.label "Date" %>
         <span>
         <%= f.label @event.errors[:date].first || " ", class: "error" %>
@@ -11,23 +11,23 @@
         <%= f.date_field :date %>
       </div>
 
-      <div>
+      <div class="small-4 half-row-control large-1 columns">
         <%= f.label "From" %>
         <span>
         <%= f.label @event.errors[:start_time].first || " ", class: "error" %>
       </span>
-        <%= f.text_field :start_time, class: "time_picker" %>
+        <%= f.text_field :start_time, id: "start_time" %>
       </div>
 
-      <div>
+      <div class="small-4 half-row-control large-1 columns">
         <%= f.label "To" %>
         <span>
         <%= f.label @event.errors[:end_time].first || " ", class: "error" %>
       </span>
-        <%= f.text_field :end_time, class: "time_picker" %>
+        <%= f.text_field :end_time, id: "end_time" %>
       </div>
 
-      <div>
+      <div class="columns large-8 small-12">
         <%= f.label "Event Name" %>
         <span>
         <%= f.label @event.errors[:name].first || " ", class: "error" %>
@@ -35,25 +35,26 @@
         <%= f.text_field :name %>
       </div>
 
-      <div>
+      <div class="columns large-8 small-12">
         <%= f.label "Event Description" %>
         <span>
         <%= f.label @event.errors[:description].first || " ", class: "error" %>
       </span>
-        <%= f.text_field :description %>
+        <%= f.text_area :description %>
       </div>
 
       <%= f.hidden_field :user_id %>
-      <%= f.submit %>
-      <%= link_to "Cancel", :back %>
+      <div class="columns button-holder">
+        <button name="commit" type="submit" class="success-button">Update Event</button>
+        <%= link_to "Discard", events_url, class: "button success-button secondary-button" %>
+      </div>
   <% end %>
 </div>
 <%= content_for :custom_js do %>
+    <%= javascript_include_tag "events_controller" %>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.time_picker').datetimepicker({
-                pickDate: false
-            });
-        });
+      $(function () {
+        new EventController("#edit-events-container").init();
+      });
     </script>
 <% end %>
