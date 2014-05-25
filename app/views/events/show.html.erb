@@ -1,7 +1,7 @@
 <div class="event">
-  <div class="columns small-12 large-8 clearfix">
+  <div class="columns small-12 large-8">
     <h1 id="event-name-header" class="header"><%= @event.name %></h1>
-    <div class="event-details-container">
+    <div class="event-details-container clearfix">
         <div class="label-value-container small-12 large-4 columns">
           <div class="label">Date</div>
           <div class="value"><%= @event.created_at.strftime("%d-%b-%Y") %></div>
@@ -43,7 +43,7 @@
     </div>
   </div>
   <div id="participants-container" class="columns small-12 large-4">
-    <h1 class="header" id="participants-header">Participants (<%= @event_participants.count %>)</h1>
+    <h4 class="header" id="participants-header">Participants (<%= @event_participants.count %>)</h4>
     <ul class="">
       <% @event_participants.each do |event_participant| %>
           <li>
@@ -53,29 +53,28 @@
     </ul>
   </div>
   <div id="comments-container" class="columns small-12 large-8">
-      <h1 class="header" id="comments-header">Comments (<%= @all_comments.count %>)</h1>
+      <h4 class="header" id="comments-header"><%=image_tag "comments-icon.png", class: "comments-icon" %> Comments (<%= @all_comments.count %>)</h4>
       <% if user_signed_in? %>
           <%= form_for @comment do |f| %>
               <div>
-                <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here" %>
+                <%= f.text_area :body, placeholder: "Post your queries/suggestions/comments here", class: "row" %>
                 <%= f.hidden_field :user_id %>
                 <%= f.hidden_field :event_id %>
-                <%= f.submit "Submit" %>
+                <button name="commit" type="submit" class="button success-button secondary-button">Submit</button>
               </div>
           <% end %>
       <% end %>
       <ul class="comment_listing">
         <% @all_comments.each do |comment| %>
             <li>
-              <div><%= comment.user.name %>
-                <%= time_ago_in_words(comment.created_at) + " ago" %></div>
-              <div><p><%= comment.body %></p></div>
+              <div class="user-name"><%= comment.user.name %> <span class="small-text">wrote:</span></div>
+              <div class="comment-posted-time"><%= time_ago_in_words(comment.created_at) + " ago" %></div>
+              <p>
+                <%= comment.body %>
+              </p>
               <%= link_to 'Delete', comment_path(comment.id), :method => :delete if current_user && comment.user_id == current_user.id %>
             </li>
         <% end %>
       </ul>
   </div>
 </div>
-
-
-
