@@ -86,3 +86,42 @@ div.form {
 	background-color: #F1EEEE;
 	color: gray;
 }
+.failure-button {
+    background-color: rgb(204, 80, 80);
+}
+
+.header {
+    background-color: rgb(162, 196, 201);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+div.columns {
+    padding-left: 0;
+    padding-right: 0;
+}
+.event-details-container {
+    padding: 15px 5px;
+    min-height: 300px;
+}
+.event-details-container .label {
+    color: rgb(192, 180, 177);
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 0.8rem;
+    padding: 0;
+    margin-bottom: 2px;
+}
+.label-value-container {
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+}
+#participants-container {
+    float: right;
+}
+#event-name-header {
+	border-right: thin solid white;
+}
+#comments-container {
+	float: left;
+}
