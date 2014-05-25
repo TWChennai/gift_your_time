@@ -1,0 +1,20 @@
+.sign-up-container {
+	margin: auto;
+	margin-top: 2%;
+	padding-left: 2%;
+	padding-bottom: 2%;
+	background-color: rgba(84, 141, 118, 0.08);
+	border-radius: 15px;
+	input {
+		max-width: 300px;
+	}
+}
+
+
+
+//mobile
+@media screen and (max-width: 46rem) {
+	.sign-up-container {
+		background-color: transparent;
+	}
+}
