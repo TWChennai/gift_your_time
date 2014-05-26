@@ -16,7 +16,6 @@
 //= require foundation
 //= require_tree .
 //= require moment
-//= require bootstrap-datetimepicker
 
 // replace lo-dash template delimiters from <%%> to [%%]
 // to not conflict with erb 
