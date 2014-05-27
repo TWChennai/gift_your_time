@@ -62,7 +62,7 @@
 </script>
 
 <%= content_for :custom_js do %>
-    <%= javascript_include_tag "index" %>
+    <%= javascript_include_tag "calendar_controller" %>
     <script type="text/javascript">
       $(function () {
         new CalendarController("#calendar", window.Calendar).init();

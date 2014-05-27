@@ -14,12 +14,14 @@
 <body>
   <%= render "shared/top_bar" %>
 
-  <div class="notice"><%= notice %></div>
-
-  <div class="alert"><%= alert %></div>
+  <div id="notice-msgs" class="hide"><%= notice %></div>
+  <div id="alert-msgs" class="hide"><%= alert %></div>
 
   <%= yield %>
   <%= javascript_include_tag "application" %>
   <%= yield :custom_js %>
+  <script type="text/javascript">
+    new NotificationController("#notice-msgs", "#alert-msgs").showNotifications();
+  </script>
 </body>
 </html>
