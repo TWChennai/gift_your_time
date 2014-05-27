@@ -1,5 +1,12 @@
 $vertical-spacing: 15px;
 $calendar-icon-width: 66px;
+
+.event-listing-container {
+	.heading {
+		margin-bottom: 0px;
+	}
+}
+
 .search-results-list {
 	list-style-type: none;
 	margin: 0;
@@ -31,7 +38,7 @@ $calendar-icon-width: 66px;
 }
 
 .day-date-icon {
-	background-image: url("Very-Basic-Calendar-icon.png");
+	background-image: url("icon-calendar-big.png");
 	background-repeat: no-repeat;
 	width: $calendar-icon-width;
 	height: $calendar-icon-width;

@@ -1,23 +1,59 @@
-<% if @organized_events.present? %>
-<h3>Events you organized</h3>
-<ul>
-  <% @organized_events.each do |event| %>
-    <li>
-    <%= link_to event.name, event_url(event.id) %>
-    <%= time_ago_in_words(event.date)%> ago
+<div class="event-listing-container">
+  <% if @organized_events.present? %>
+  <h1 class="heading">
+    Events you organized
+  </h1>
+  <ul class="search-results-list">
+    <% @organized_events.each do |event| %>  
+    <li class="search-result-item clearfix">
+      <div class="date-indicator columns large-1 small-3">
+        <div class="date-info-holder">
+          <div class="day-date-icon">
+            <div class="day-name small-text">Tue</div>
+            <div class="day-number">23</div>
+          </div>
+          <div class="small-text">APR 2014</div>
+        </div>
+      </div>
+      <div class="columns large-2 small-3 time-range">
+        <div><%= event.start_time.strftime("%I:%M %P") %> </div>
+        <div>to</div>
+        <div><%= event.end_time.strftime("%I:%M %P") %></div>
+      </div>
+      <div class="columns large-9 small-6">
+        <div class="event-name"><%= link_to event.name, event_url(event.id) %></div>
+        <div class="small-text"><%= time_ago_in_words(event.date)%> ago</div>
+      </div>
     </li>
-<%end%>
-</ul>
-<%end%>
-<% if @participated_events.present? %>
-<h3> Events you attended </h3>
-<ul>
-  <% @participated_events.each do |event| %>
-      <li>
-        <%= link_to event.name, event_url(event.id) %>
-        <%= event.user.name%>
-        <%= time_ago_in_words(event.date)%> ago
-      </li>
+    <%end%>
+  </ul>
   <%end%>
-</ul>
-<%end%>
+  <% if @participated_events.present? %>
+  <h1 class="heading"> Events you attended </h1>
+  <ul class="search-results-list">
+    <% @participated_events.each do |event| %>
+    <li class="search-result-item clearfix">
+      <div class="date-indicator columns large-1 small-3">
+        <div class="date-info-holder">
+          <div class="day-date-icon">
+            <div class="day-name small-text">Tue</div>
+            <div class="day-number">23</div>
+          </div>
+          <div class="small-text">APR 2014</div>
+        </div>
+      </div>
+      <div class="columns large-2 small-3 time-range">
+        <div><%= event.start_time.strftime("%I:%M %P") %> </div>
+        <div>to</div>
+        <div><%= event.end_time.strftime("%I:%M %P") %></div>
+      </div>
+      <div class="columns large-9 small-6">
+        <div class="event-name"><%= link_to event.name, event_url(event.id) %></div>
+        <div class="small-text"> by <%= event.user.name %> </div>
+        <div class="small-text"><%= time_ago_in_words(event.date)%> ago</div>
+      </div>
+    </li>
+    <%end%>
+  </ul>
+  <%end%>
+</div>
