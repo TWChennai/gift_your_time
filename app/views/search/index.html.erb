@@ -1,19 +1,41 @@
 <div>
   <% if @results.present? %>
-      <%= pluralize( @results.count, 'event' ) %> found
-      <ul>
+      <div class="search-results-summary"><%= pluralize( @results.count, 'event' ) %> found</div>
+      <ul class="search-results-list">
         <% @results.each do |event| %>
-            <div>
-              <ul>
-                <li>
-                  <%= event.start_time.strftime("%I:%M %P") %> to <%= event.end_time.strftime("%I:%M %P") %>
-                  <span> <%= link_to event.name,event_url(event) %> </span>
-                  <span> by <%= event.user.name %> </span>
-                  <span> |  COMMENTS <%= event.comments.count%> </span>
-                  <span> |  PARTICIPANTS <%= event.event_participation.count%> </span>
-                </li>
-              </ul>
+          <li class="search-result-item clearfix">
+            <div class="date-indicator columns large-1 small-3">
+              <div class="date-info-holder">
+                <div class="day-date-icon">
+                  <div class="day-name small-text">Tue</div>
+                  <div class="day-number">23</div>
+                </div>
+                <div class="small-text">APR 2014</div>
+              </div>
             </div>
+            <div class="columns large-2 small-3 time-range">
+              <div><%= event.start_time.strftime("%I:%M %P") %> </div>
+              <div>to</div>
+              <div><%= event.end_time.strftime("%I:%M %P") %></div>
+            </div>
+            <div class="columns large-3 small-6">
+              <div class="event-name"><%= link_to event.name,event_url(event) %></div>
+              <div class="small-text"> by <%= event.user.name %> </div>
+            </div>
+            <div class="columns large-2 show-for-large-up">
+              <div class="columns large-12 gray-text"><%= image_tag "participants-icon.png", class: "icon-small"%> Participants (<%= event.event_participation.count%>)</div>
+              <div class="columns large-12 gray-text"><%= image_tag "comments-icon.png", class: "icon-small"%> Comments (<%= event.comments.count%>)</div>
+            </div>
+            <div class="columns large-3 show-for-large-up button-holder">
+              <% if current_user %>
+                <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " + event.id.to_s).count == 0 %>
+                      <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id}), class: "button success-button" %>
+                <% else %>
+                      <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id}), :method => :delete, class: "button success-button failure-button" %>
+                <% end %>
+              <% end %>
+            </div>
+          </li>
         <% end %>
       </ul>
   <% end %>

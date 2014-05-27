@@ -1,0 +1,87 @@
+$vertical-spacing: 15px;
+$calendar-icon-width: 66px;
+.search-results-list {
+	list-style-type: none;
+	margin: 0;
+}
+.time-range div {
+	display: inline-block;
+}
+
+.icon-small {
+	width: 15px;
+	opacity: 0.4;
+}
+
+.gray-text {
+	color: rgb(173, 173, 173);
+}
+.search-result-item:nth-child(odd) {
+	background-color: #eeeeee;
+}
+.search-result-item:nth-child(even) {
+	background-color: #fbfbfb;
+}
+.search-result-item {
+	padding-top: $vertical-spacing;
+	height: 90px;
+	.button-holder {
+		margin-top: 4px;
+	}
+}
+
+.day-date-icon {
+	background-image: url("Very-Basic-Calendar-icon.png");
+	background-repeat: no-repeat;
+	width: $calendar-icon-width;
+	height: $calendar-icon-width;
+	position: relative;
+	text-align: center;
+	padding-top: 13px;
+}
+.date-indicator {
+	text-align: center;
+    margin-top: -1 * $vertical-spacing;
+}
+.date-info-holder {
+	width: $calendar-icon-width;
+	margin: auto;
+}
+
+.search-result-item .event-name {
+    font-size: 1.2rem;
+}
+
+.day-name {
+    top: 8px;
+	position: relative;
+}
+.day-number {
+    font-size: 23px;
+}
+.month-year-info {
+    margin: 0;
+}
+
+.search-results-summary {
+    font-size: 1.1rem;
+    background-color: rgb(251, 251, 251);
+    padding: 10px;
+}
+
+@media screen and (max-width: 46rem) {
+	.search-result-item {
+		padding-top: 0px;
+	}
+	.date-indicator {
+		margin-top: 0px;
+	}
+	.time-range {
+		margin-top: 0px;
+		div {
+			display: block;
+			text-align: center;
+		}
+	}
+}
+
