@@ -7,10 +7,10 @@
             <div class="date-indicator columns large-1 small-3">
               <div class="date-info-holder">
                 <div class="day-date-icon">
-                  <div class="day-name small-text">Tue</div>
-                  <div class="day-number">23</div>
+                  <div class="day-name small-text"><%=event.date.strftime("%a")%></div>
+                  <div class="day-number"><%=event.date.strftime("%d")%></div>
                 </div>
-                <div class="small-text">APR 2014</div>
+                <div class="small-text"><%=event.date.strftime("%b")%> <%=event.date.strftime("%Y")%></div>
               </div>
             </div>
             <div class="columns large-2 small-3 time-range">
@@ -27,13 +27,17 @@
               <div class="columns large-12 gray-text"><%= image_tag "comments-icon.png", class: "icon-small"%> Comments (<%= event.comments.count%>)</div>
             </div>
             <div class="columns large-3 show-for-large-up button-holder">
-              <% if current_user %>
-                <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " + event.id.to_s).count == 0 %>
-                      <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id}), class: "button success-button" %>
-                <% else %>
-                      <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id}), :method => :delete, class: "button success-button failure-button" %>
-                <% end %>
-              <% end %>
+                    <% if current_user && current_user.id == event.user_id %>
+                        <% if current_user.id == event.user_id %>
+                            <span> You are the organizer</span>
+                        <% end %>
+                        <% else %>
+                      <% if EventParticipation.where("user_id =" + current_user.id.to_s+" AND event_id = " + event.id.to_s).count == 0 %>
+                   <%= link_to "Attend this event", new_event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id}, :tag =>'search')%>
+                       <% else %>
+                   <%= link_to "Unsubscribe from this event", event_participation_path(:event_participation => {:user_id => current_user.id, :event_id => event.id},:id =>event.id, :tag => 'search'), :method => :delete %>
+            <% end %>
+                  <% end %>
             </div>
           </li>
         <% end %>

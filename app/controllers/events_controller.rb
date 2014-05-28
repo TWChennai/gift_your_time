@@ -49,6 +49,10 @@ class EventsController < ApplicationController
       redirect_to events_url
     else
       @event.name = params[:event][:name]
+      @event.date = params[:event][:date]
+      @event.start_time = params[:event][:start_time]
+      @event.end_time = params[:event][:end_time]
+      @event.description = params[:event][:description]
     end
     if @event.save
       redirect_to events_url

@@ -9,10 +9,10 @@
       <div class="date-indicator columns large-1 small-3">
         <div class="date-info-holder">
           <div class="day-date-icon">
-            <div class="day-name small-text">Tue</div>
-            <div class="day-number">23</div>
+            <div class="day-name small-text"><%=event.date.strftime("%a")%></div>
+            <div class="day-number"><%=event.date.strftime("%d")%></div>
           </div>
-          <div class="small-text">APR 2014</div>
+          <div class="small-text"><%=event.date.strftime("%b")%> <%=event.date.strftime("%Y")%></div>
         </div>
       </div>
       <div class="columns large-2 small-3 time-range">
@@ -28,7 +28,7 @@
     <%end%>
   </ul>
   <%end%>
-  <% if @participated_events.present? %>
+  <% if @participated_events.present? && @participated_events != @organized_events%>
   <h1 class="heading"> Events you attended </h1>
   <ul class="search-results-list">
     <% @participated_events.each do |event| %>
@@ -36,10 +36,10 @@
       <div class="date-indicator columns large-1 small-3">
         <div class="date-info-holder">
           <div class="day-date-icon">
-            <div class="day-name small-text">Tue</div>
-            <div class="day-number">23</div>
+            <div class="day-name small-text"><%=event.date.strftime("%a")%></div>
+            <div class="day-number"><%=event.date.strftime("%d")%></div>
           </div>
-          <div class="small-text">APR 2014</div>
+          <div class="small-text"><%=event.date.strftime("%b")%> <%=event.date.strftime("%Y")%></div>
         </div>
       </div>
       <div class="columns large-2 small-3 time-range">

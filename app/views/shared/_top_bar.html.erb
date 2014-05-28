@@ -24,7 +24,7 @@
         <a href="#"><%= current_user.name %></a>
         <ul class="dropdown">
           <li><%= link_to "Events History", history_url %></li>
-          <li><%= link_to "Edit your profile", edit_user_registration_url %></li>
+          <li><%= link_to "Change Password", edit_user_registration_url %></li>
           <li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
         </ul>
       </li>
