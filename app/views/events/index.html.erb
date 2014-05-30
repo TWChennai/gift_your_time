@@ -37,7 +37,10 @@
 
 <script type="text/template" id="event-details-template">
   <div class="add-event clearfix">
-    <div class="date"><span id="day-number">[%=dayNumber%]</span> [%=monthName%] [%=year%] </div> <a class="add-event-button" href="<%=new_event_path%>">Add an event</a>
+    <div class="date">
+      <span id="day-number">[%=dayNumber%]</span> [%=monthName%] [%=year%]
+      </div>
+    <a class="add-event-button" href="<%=new_event_path()%>?date=[%=date%]">Add an event</a>
   </div>
   <ul class="events-in-day-list">
     [% _.each(events, function (event) { %]

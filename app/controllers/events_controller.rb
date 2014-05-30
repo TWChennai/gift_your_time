@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   def new
     flash[:error] = "You must sign in to add an event!"
     redirect_to new_user_session_path and return unless user_signed_in?
-    @event = Event.new(date: Date.today, user_id: current_user.id)
+    @event = Event.new(date: params[:date], user_id: current_user.id)
   end
 
   def create

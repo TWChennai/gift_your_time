@@ -72,7 +72,8 @@ window.CalendarController = function(calenderElementSelector, calendarWidget) {
             monthName: date.format("MMMM"),
             year: date.format("YYYY"),
             events: eventsList,
-            isMobile: isMobile
+            isMobile: isMobile,
+            date: date.format("DD/MMMM/YYYY")
         });
         $("#event-details").html("");
         $("#light-box-container").html("");
