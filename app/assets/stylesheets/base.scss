@@ -34,8 +34,13 @@ $white: #ffffff;
 }
 
 .logo {
-	height: $topbar-height - 10px;
-	margin: 5px;
+	height: $topbar-height;
+
+}
+
+.score {
+  height: $topbar-height - 10px;
+  color: red;
 }
 
 .title-area {

@@ -33,6 +33,14 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if @event.user_id == current_user.id
+      @participations = @event.event_participation
+      score = ((@event.end_time - @event.start_time) / 1.hour).round
+      for i in @participations
+          i.user.score = i.user.score +  score
+          i.user.save!
+      end
+      current_user.score = current_user.score - (score * @participations.length)
+      current_user.save!
       @event.destroy
       redirect_to events_path
     end
@@ -49,10 +57,23 @@ class EventsController < ApplicationController
       redirect_to events_url
     else
       @event.name = params[:event][:name]
-      @event.date = params[:event][:date]
-      @event.start_time = params[:event][:start_time]
-      @event.end_time = params[:event][:end_time]
       @event.description = params[:event][:description]
+      @event.date = params[:event][:date]
+      oldEndTime = params[:event][:end_time].to_time.strftime("%H:%M")
+      oldStartTime = params[:event][:start_time].to_time.strftime("%H:%M")
+      if @event.start_time.strftime("%H:%M") != oldStartTime || @event.end_time.strftime("%H:%M") != oldEndTime
+        @participations = @event.event_participation
+        old_score = ((@event.end_time - @event.start_time) / 1.hour).round
+        new_score =  ((params[:event][:end_time].to_time - params[:event][:start_time].to_time ) / 1.hour).round
+        for i in @participations
+          i.user.score = i.user.score + old_score - new_score
+          i.user.save!
+        end
+        @event.start_time = params[:event][:start_time]
+        @event.end_time = params[:event][:end_time]
+        current_user.score = current_user.score + (new_score - old_score) * @participations.length
+        current_user.save!
+        end
     end
     if @event.save
       redirect_to events_url
